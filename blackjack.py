@@ -85,7 +85,7 @@ class Hand:
 
     def draw(self, canvas, pos):
         center_position = pos
-        #print center_position
+
         for card in self.hand:
             card_loc = (CARD_CENTER[0] + CARD_SIZE[0] * RANKS.index(card.rank),
                         CARD_CENTER[1] + CARD_SIZE[1] * SUITS.index(card.suit))
@@ -155,7 +155,7 @@ def hit():
     # if busted, assign a message to outcome, update in_play and score
     if player_hand.get_value() > 21:
         in_play = False
-        print "You have busted."
+        print "You have busted. Dealer wins."
 
 
 def stand():
@@ -168,7 +168,7 @@ def stand():
         # assign a message to outcome, update in_play and score
         in_play = False
         if dealer_hand.get_value() > 21:
-            outcome = "Dealer has busted at " + str(dealer_hand.get_value()) + ". You win!"
+            outcome = "Dealer busts with " + str(dealer_hand.get_value()) + ". You win!"
         elif dealer_hand.get_value() > player_hand.get_value():
             outcome = "Dealer has " + str(dealer_hand.get_value()) + ". You have " + str(player_hand.get_value()) + ". Dealer wins."
         elif dealer_hand.get_value() == player_hand.get_value():
@@ -181,12 +181,9 @@ def stand():
 
 # draw handler
 def draw(canvas):
-    # test to make sure that card.draw works, replace with your code below
-    # card = Card("S", "A")
-    # card.draw(canvas, [300, 300])
-
-    # test draw handler for hand.draw in upper left corner
+    # draw player and dealer hands
     player_hand.draw(canvas, [600 // 5, 600 // 1.5])
+    dealer_hand.draw(canvas, [600 // 5, 600 // 5])
 
 
 # initialization frame
