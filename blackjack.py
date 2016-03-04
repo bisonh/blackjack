@@ -94,7 +94,10 @@ class Deck:
 def deal():
     global outcome, in_play
 
-    # your code goes here
+    new_deck = Deck()
+    print new_deck
+    new_deck.shuffle()
+    print new_deck
 
     in_play = True
 
