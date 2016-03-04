@@ -1,6 +1,7 @@
 import simplegui
 import random
 
+
 # load card sprite - 936x384 - source: jfitz.com
 CARD_SIZE = (72, 96)
 CARD_CENTER = (36, 48)
@@ -10,10 +11,11 @@ CARD_BACK_SIZE = (72, 96)
 CARD_BACK_CENTER = (36, 48)
 card_back = simplegui.load_image("http://storage.googleapis.com/codeskulptor-assets/card_jfitz_back.png")
 
+
 # initialize some useful global variables
 in_play = False
-outcome = ""
 score = 0
+
 
 # define globals for cards
 SUITS = ('C', 'S', 'H', 'D')
@@ -46,6 +48,7 @@ class Card:
                     CARD_CENTER[1] + CARD_SIZE[1] * SUITS.index(self.suit))
         canvas.draw_image(card_images, card_loc, CARD_SIZE, [pos[0] + CARD_CENTER[0], pos[1] + CARD_CENTER[1]], CARD_SIZE)
 
+
 # define hand class
 class Hand:
     def __init__(self):
@@ -54,7 +57,7 @@ class Hand:
     def __str__(self):
         output = "Hand contains "
         for card in self.hand:
-            output += str(card) + " "
+            output += str(card) + "|"
         return output
 
     def add_card(self, card):
@@ -104,55 +107,59 @@ class Deck:
 
 #define event handlers for buttons
 def deal():
-    global outcome, in_play, deck, player_hand, dealer_hand
-
+    global in_play, deck, player_hand, dealer_hand
+    # initialize a new deck
     deck = Deck()
     deck.shuffle()
-
+    # initialize new hand for player and dealer
     player_hand, dealer_hand = Hand(), Hand()
+    # player is dealt to first
     player_hand.add_card(deck.deal_card())
     dealer_hand.add_card(deck.deal_card())
     player_hand.add_card(deck.deal_card())
     dealer_hand.add_card(deck.deal_card())
-    print "PLAYER:", player_hand, "DEALER:", dealer_hand
-
+    print "PLAYER", player_hand
+    print "DEALER", dealer_hand
+    # switch to start play
     in_play = True
+
 
 def hit():
     global in_play
     # if the hand is in play, hit the player
     if in_play:
         player_hand.add_card(deck.deal_card())
-        print "PLAYER:", player_hand
+        print "PLAYER", player_hand
     # if busted, assign a message to outcome, update in_play and score
     if player_hand.get_value() > 21:
         in_play = False
         print "You have busted."
 
+
 def stand():
-    global in_play
+    global in_play, outcome
     # if hand is in play, repeatedly hit dealer until his hand has value 17 or more
     if in_play:
         while dealer_hand.get_value() < 17:
             dealer_hand.add_card(deck.deal_card())
-            print "DEALER:", dealer_hand, dealer_hand.get_value()
-
-    # assign a message to outcome, update in_play and score
-    if in_play:
+            print "DEALER", dealer_hand, dealer_hand.get_value()
+        # assign a message to outcome, update in_play and score
         in_play = False
         if dealer_hand.get_value() > 21:
-            print "Dealer has busted. You win!"
+            outcome = "Dealer has busted at " + str(dealer_hand.get_value()) + ". You win!"
         elif dealer_hand.get_value() > player_hand.get_value():
-            print "Dealer wins."
+            outcome = "Dealer has " + str(dealer_hand.get_value()) + ". You have " + str(player_hand.get_value()) + ". Dealer wins."
         elif dealer_hand.get_value() == player_hand.get_value():
-            print "Push. Dealer wins."
+            outcome = "You and the dealer both have " + str(dealer_hand.get_value()) + ". Push. Dealer wins."
         else:
-            print "You win!"
+            outcome =  "Dealer has " + str(dealer_hand.get_value()) + ". You have " + str(player_hand.get_value()) + ". You win!"
+        # final message
+        print outcome
+
 
 # draw handler
 def draw(canvas):
     # test to make sure that card.draw works, replace with your code below
-
     card = Card("S", "A")
     card.draw(canvas, [300, 300])
 
@@ -160,6 +167,7 @@ def draw(canvas):
 # initialization frame
 frame = simplegui.create_frame("Blackjack", 600, 600)
 frame.set_canvas_background("Green")
+
 
 #create buttons and canvas callback
 frame.add_button("Deal", deal, 200)
