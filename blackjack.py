@@ -62,14 +62,18 @@ class Hand:
 
     def get_value(self):
         hand_value = 0
+        aces = 0
         for card in self.hand:
             if not card.get_rank() == "A":
+                if hand_value + VALUES[card.get_rank()] > 21 and aces > 1:
+                    hand_value = hand_value - 10
+                    aces -= 1
                 hand_value += VALUES[card.get_rank()]
             else:
-                if hand_value + 11 <= 21:
-                    hand_value += 11
-                else:
-                    hand_value += VALUES[card.get_rank()]
+                hand_value += 1
+                aces += 1
+                if hand_value + 10 <= 21:
+                    hand_value += 10
         return hand_value
 
     def draw(self, canvas, pos):
