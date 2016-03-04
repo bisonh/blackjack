@@ -15,6 +15,7 @@ card_back = simplegui.load_image("http://storage.googleapis.com/codeskulptor-ass
 # initialize some useful global variables
 in_play = False
 game_message = "Hit or stand?"
+winner = ""
 score = 0
 
 
@@ -164,7 +165,7 @@ def deal():
 
 
 def hit():
-    global in_play, score
+    global in_play, score, winner, game_message
     # if the hand is in play, hit the player
     if in_play:
         player_hand.add_card(deck.deal_card())
@@ -173,11 +174,13 @@ def hit():
     if player_hand.get_value() > 21 and in_play:
         in_play = False
         score -= 1
+        winner = "Dealer wins."
+        game_message = "New deal?"
         print "You busted. Dealer wins."
 
 
 def stand():
-    global in_play, score, game_message
+    global in_play, score, game_message, winner
     # if hand is in play, repeatedly hit dealer until his hand has value 17 or more
     if in_play:
         while dealer_hand.get_value() < 17:
@@ -189,18 +192,22 @@ def stand():
             outcome = "Dealer busts with " + str(dealer_hand.get_value()) + ". You win!"
             score += 1
             game_message = "New deal?"
+            winner = "You win!"
         elif dealer_hand.get_value() > player_hand.get_value():
             outcome = "Dealer has " + str(dealer_hand.get_value()) + ". You have " + str(player_hand.get_value()) + ". Dealer wins."
             score -= 1
             game_message = "New deal?"
+            winner = "Dealer wins."
         elif dealer_hand.get_value() == player_hand.get_value():
             outcome = "You and the dealer both have " + str(dealer_hand.get_value()) + ". Push. Dealer wins."
             score -= 1
             game_message = "New deal?"
+            winner = "Dealer wins."
         else:
             outcome =  "Dealer has " + str(dealer_hand.get_value()) + ". You have " + str(player_hand.get_value()) + ". You win!"
             score += 1
             game_message = "New deal?"
+            winner = "You win!"
         # final message
         print outcome
 
@@ -209,7 +216,7 @@ def stand():
 def draw(canvas):
     # draw Blackjack, game message, score, and player titles
     canvas.draw_text("Blackjack", [600 // 19, 75], 56, "#000", 'sans-serif')
-    canvas.draw_text(game_message, [600 // 2, 600 // 1.5 - 10], 36, "#000", 'sans-serif')
+    #canvas.draw_text(game_message, [600 // 2, 600 // 1.5 - 10], 36, "#000", 'sans-serif')
     canvas.draw_text("Score: " + str(score), [364, 75], 36, "#000", 'sans-serif')
     canvas.draw_text("Player", [600 // 7, 600 // 1.5 - 10], 36, "#000", 'sans-serif')
     canvas.draw_text("Dealer", [600 // 7, 600 // 3.5 - 10], 36, "#000", 'sans-serif')
@@ -221,6 +228,10 @@ def draw(canvas):
     # draw dealer hold card over first card when in play
     if in_play:
         dealer_hand.draw_hold(canvas, [600 // 7, 600 // 3.5])
+        canvas.draw_text(game_message, [600 // 2, 600 // 1.5 - 10], 36, "#000", 'sans-serif')
+    else:
+        #canvas.draw_text(winner, [50, 50], 36, "#000", 'sans-serif')
+        canvas.draw_text(winner + " " + game_message, [600 // 7, 575], 36, "#000", 'sans-serif')
 
 
 # initialization frame
