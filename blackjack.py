@@ -84,7 +84,22 @@ class Hand:
         return hand_value
 
     def draw(self, canvas, pos):
-        pass    # draw a hand on the canvas, use the draw method for cards
+        center_position = pos
+        #print center_position
+        for card in self.hand:
+            card_loc = (CARD_CENTER[0] + CARD_SIZE[0] * RANKS.index(card.rank),
+                        CARD_CENTER[1] + CARD_SIZE[1] * SUITS.index(card.suit))
+            canvas.draw_image(card_images,
+                              # center_source
+                              card_loc,
+                              # width_height_source, (72, 96)
+                              CARD_SIZE,
+                              # center_destination, needs to shift with new card
+                              [pos[0] + CARD_CENTER[0], pos[1] + CARD_CENTER[1]],
+                              # width_height_dest
+                              CARD_SIZE)
+            pos[0] += CARD_SIZE[0]
+
 
 
 # define deck class
@@ -167,8 +182,11 @@ def stand():
 # draw handler
 def draw(canvas):
     # test to make sure that card.draw works, replace with your code below
-    card = Card("S", "A")
-    card.draw(canvas, [300, 300])
+    # card = Card("S", "A")
+    # card.draw(canvas, [300, 300])
+
+    # test draw handler for hand.draw in upper left corner
+    player_hand.draw(canvas, [600 // 5, 600 // 1.5])
 
 
 # initialization frame
