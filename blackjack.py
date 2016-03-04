@@ -92,7 +92,7 @@ class Deck:
 
 #define event handlers for buttons
 def deal():
-    global outcome, in_play, deck
+    global outcome, in_play, deck, player_hand, dealer_hand
 
     deck = Deck()
     deck.shuffle()
