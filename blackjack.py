@@ -133,7 +133,12 @@ class Deck:
 
 #define event handlers for buttons
 def deal():
-    global in_play, deck, player_hand, dealer_hand, output
+    global in_play, deck, player_hand, dealer_hand, game_message, score
+
+    # player loses bet if cards dealt mid-round
+    if in_play:
+        score -= 1
+
     # initialize a new deck
     deck = Deck()
     deck.shuffle()
@@ -153,7 +158,6 @@ def deal():
 
     # set output to canvas
     game_message = "Hit or stand?"
-
 
     # switch to start play
     in_play = True
