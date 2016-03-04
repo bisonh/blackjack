@@ -187,6 +187,9 @@ def stand():
 
 # draw handler
 def draw(canvas):
+    # draw Blackjack on screen
+    canvas.draw_text("Blackjack", [600 // 19, 75], 56, "#000", 'sans-serif')
+
     # draw player and dealer hands
     player_hand.draw(canvas, [600 // 5, 600 // 1.5])
     dealer_hand.draw(canvas, [600 // 5, 600 // 5])
