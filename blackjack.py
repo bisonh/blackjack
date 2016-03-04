@@ -199,6 +199,7 @@ def draw(canvas):
     canvas.draw_text(game_message, [600 // 2, 600 // 1.5 - 10], 36, "#000", 'sans-serif')
     canvas.draw_text("Score: " + str(score), [364, 75], 36, "#000", 'sans-serif')
     canvas.draw_text("Player", [600 // 5, 600 // 1.5 - 10], 36, "#000", 'sans-serif')
+    canvas.draw_text("Dealer", [600 // 7, 600 // 3.5 - 10], 36, "#000", 'sans-serif')
 
     # draw player and dealer hands
     player_hand.draw(canvas, [600 // 5, 600 // 1.5])
