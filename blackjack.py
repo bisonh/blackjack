@@ -130,11 +130,24 @@ def hit():
         print "You have busted."
 
 def stand():
-    pass  # replace with your code below
-
+    global in_play
     # if hand is in play, repeatedly hit dealer until his hand has value 17 or more
+    if in_play:
+        while dealer_hand.get_value() < 17:
+            dealer_hand.add_card(deck.deal_card())
+            print "DEALER:", dealer_hand, dealer_hand.get_value()
 
     # assign a message to outcome, update in_play and score
+    if in_play:
+        in_play = False
+        if dealer_hand.get_value() > 21:
+            print "Dealer has busted. You win!"
+        elif dealer_hand.get_value() > player_hand.get_value():
+            print "Dealer wins."
+        elif dealer_hand.get_value() == player_hand.get_value():
+            print "Push. Dealer wins."
+        else:
+            print "You win!"
 
 # draw handler
 def draw(canvas):
