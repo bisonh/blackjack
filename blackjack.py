@@ -170,7 +170,7 @@ def hit():
         player_hand.add_card(deck.deal_card())
         print "PLAYER", player_hand
     # if busted, assign a message to outcome, update in_play and score
-    if player_hand.get_value() > 21:
+    if player_hand.get_value() > 21 and in_play:
         in_play = False
         score -= 1
         print "You busted. Dealer wins."
