@@ -100,8 +100,12 @@ class Hand:
             pos[0] += CARD_SIZE[0]
 
     def draw_hold(self, canvas, pos):
-        pass
-
+        card_loc = (CARD_BACK_CENTER[0], CARD_BACK_CENTER[1])
+        canvas.draw_image(card_back,
+              card_loc,
+              CARD_BACK_SIZE,
+              [pos[0] + CARD_BACK_CENTER[0], pos[1] + CARD_BACK_CENTER[1]],
+              CARD_BACK_SIZE)
 
 
 # define deck class
@@ -186,10 +190,10 @@ def draw(canvas):
     # draw player and dealer hands
     player_hand.draw(canvas, [600 // 5, 600 // 1.5])
     dealer_hand.draw(canvas, [600 // 5, 600 // 5])
-    #if in_play:
-        #dealer_hand.draw_hold(canvas, [600 // 5, 600 // 5])
-    #else:
-        #dealer_hand.draw(canvas, [600 // 5, 600 // 5])
+
+    # draw dealer hold card over first card when in play
+    if in_play:
+        dealer_hand.draw_hold(canvas, [600 // 5, 600 // 5])
 
 
 # initialization frame
