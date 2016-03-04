@@ -84,21 +84,23 @@ class Hand:
         return hand_value
 
     def draw(self, canvas, pos):
-        center_position = pos
-
         for card in self.hand:
             card_loc = (CARD_CENTER[0] + CARD_SIZE[0] * RANKS.index(card.rank),
-                        CARD_CENTER[1] + CARD_SIZE[1] * SUITS.index(card.suit))
+                            CARD_CENTER[1] + CARD_SIZE[1] * SUITS.index(card.suit))
             canvas.draw_image(card_images,
-                              # center_source
-                              card_loc,
-                              # width_height_source, (72, 96)
-                              CARD_SIZE,
-                              # center_destination, needs to shift with new card
-                              [pos[0] + CARD_CENTER[0], pos[1] + CARD_CENTER[1]],
-                              # width_height_dest
-                              CARD_SIZE)
+                  # center_source
+                  card_loc,
+                  # width_height_source, (72, 96)
+                  CARD_SIZE,
+                  # center_destination, needs to shift with new card
+                  [pos[0] + CARD_CENTER[0], pos[1] + CARD_CENTER[1]],
+                  # width_height_dest
+                  CARD_SIZE)
+            # set position of next card
             pos[0] += CARD_SIZE[0]
+
+    def draw_hold(self, canvas, pos):
+        pass
 
 
 
@@ -184,6 +186,10 @@ def draw(canvas):
     # draw player and dealer hands
     player_hand.draw(canvas, [600 // 5, 600 // 1.5])
     dealer_hand.draw(canvas, [600 // 5, 600 // 5])
+    #if in_play:
+        #dealer_hand.draw_hold(canvas, [600 // 5, 600 // 5])
+    #else:
+        #dealer_hand.draw(canvas, [600 // 5, 600 // 5])
 
 
 # initialization frame
