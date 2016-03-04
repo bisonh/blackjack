@@ -218,13 +218,9 @@ def draw(canvas):
     player_hand.draw(canvas, [600 // 7, 600 // 1.5])
     dealer_hand.draw(canvas, [600 // 7, 600 // 3.5])
 
-    # draw player and dealer hands
-    player_hand.draw(canvas, [600 // 5, 600 // 1.5])
-    dealer_hand.draw(canvas, [600 // 5, 600 // 5])
-
     # draw dealer hold card over first card when in play
     if in_play:
-        dealer_hand.draw_hold(canvas, [600 // 5, 600 // 5])
+        dealer_hand.draw_hold(canvas, [600 // 7, 600 // 3.5])
 
 
 # initialization frame
