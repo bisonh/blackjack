@@ -172,7 +172,7 @@ def hit():
 
 
 def stand():
-    global in_play, outcome
+    global in_play, score, game_message
     # if hand is in play, repeatedly hit dealer until his hand has value 17 or more
     if in_play:
         while dealer_hand.get_value() < 17:
@@ -182,12 +182,20 @@ def stand():
         in_play = False
         if dealer_hand.get_value() > 21:
             outcome = "Dealer busts with " + str(dealer_hand.get_value()) + ". You win!"
+            score += 1
+            game_message = "New deal?"
         elif dealer_hand.get_value() > player_hand.get_value():
             outcome = "Dealer has " + str(dealer_hand.get_value()) + ". You have " + str(player_hand.get_value()) + ". Dealer wins."
+            score -= 1
+            game_message = "New deal?"
         elif dealer_hand.get_value() == player_hand.get_value():
             outcome = "You and the dealer both have " + str(dealer_hand.get_value()) + ". Push. Dealer wins."
+            score -= 1
+            game_message = "New deal?"
         else:
             outcome =  "Dealer has " + str(dealer_hand.get_value()) + ". You have " + str(player_hand.get_value()) + ". You win!"
+            score += 1
+            game_message = "New deal?"
         # final message
         print outcome
 
