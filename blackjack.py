@@ -102,7 +102,7 @@ def deal():
     dealer_hand.add_card(deck.deal_card())
     player_hand.add_card(deck.deal_card())
     dealer_hand.add_card(deck.deal_card())
-    print player_hand, dealer_hand
+    print "PLAYER:", player_hand, "DEALER:", dealer_hand
 
     in_play = True
 
