@@ -133,7 +133,12 @@ class Deck:
 
 #define event handlers for buttons
 def deal():
-    global in_play, deck, player_hand, dealer_hand, output
+    global in_play, deck, player_hand, dealer_hand, game_message, score
+
+    # player loses bet if cards dealt mid-round
+    if in_play:
+        score -= 1
+
     # initialize a new deck
     deck = Deck()
     deck.shuffle()
@@ -154,13 +159,12 @@ def deal():
     # set output to canvas
     game_message = "Hit or stand?"
 
-
     # switch to start play
     in_play = True
 
 
 def hit():
-    global in_play
+    global in_play, score
     # if the hand is in play, hit the player
     if in_play:
         player_hand.add_card(deck.deal_card())
@@ -168,11 +172,12 @@ def hit():
     # if busted, assign a message to outcome, update in_play and score
     if player_hand.get_value() > 21:
         in_play = False
-        print "You have busted. Dealer wins."
+        score -= 1
+        print "You busted. Dealer wins."
 
 
 def stand():
-    global in_play, outcome
+    global in_play, score, game_message
     # if hand is in play, repeatedly hit dealer until his hand has value 17 or more
     if in_play:
         while dealer_hand.get_value() < 17:
@@ -182,12 +187,20 @@ def stand():
         in_play = False
         if dealer_hand.get_value() > 21:
             outcome = "Dealer busts with " + str(dealer_hand.get_value()) + ". You win!"
+            score += 1
+            game_message = "New deal?"
         elif dealer_hand.get_value() > player_hand.get_value():
             outcome = "Dealer has " + str(dealer_hand.get_value()) + ". You have " + str(player_hand.get_value()) + ". Dealer wins."
+            score -= 1
+            game_message = "New deal?"
         elif dealer_hand.get_value() == player_hand.get_value():
             outcome = "You and the dealer both have " + str(dealer_hand.get_value()) + ". Push. Dealer wins."
+            score -= 1
+            game_message = "New deal?"
         else:
             outcome =  "Dealer has " + str(dealer_hand.get_value()) + ". You have " + str(player_hand.get_value()) + ". You win!"
+            score += 1
+            game_message = "New deal?"
         # final message
         print outcome
 
