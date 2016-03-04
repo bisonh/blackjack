@@ -98,7 +98,7 @@ class Hand:
                   # width_height_dest
                   CARD_SIZE)
             # set position of next card
-            pos[0] += CARD_SIZE[0]
+            pos[0] += CARD_SIZE[0] + 10
 
     def draw_hold(self, canvas, pos):
         card_loc = (CARD_BACK_CENTER[0], CARD_BACK_CENTER[1])
