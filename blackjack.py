@@ -14,6 +14,7 @@ card_back = simplegui.load_image("http://storage.googleapis.com/codeskulptor-ass
 
 # initialize some useful global variables
 in_play = False
+game_message = "Hit or stand?"
 score = 0
 
 
@@ -132,7 +133,7 @@ class Deck:
 
 #define event handlers for buttons
 def deal():
-    global in_play, deck, player_hand, dealer_hand
+    global in_play, deck, player_hand, dealer_hand, output
     # initialize a new deck
     deck = Deck()
     deck.shuffle()
@@ -145,8 +146,14 @@ def deal():
     dealer_hand.add_card(deck.deal_card())
     player_hand.add_card(deck.deal_card())
     dealer_hand.add_card(deck.deal_card())
+
+    # dev debug
     print "PLAYER", player_hand
     print "DEALER", dealer_hand
+
+    # set output to canvas
+    game_message = "Hit or stand?"
+
 
     # switch to start play
     in_play = True
@@ -187,8 +194,9 @@ def stand():
 
 # draw handler
 def draw(canvas):
-    # draw Blackjack on screen
+    # draw Blackjack, game message, score, and player titles
     canvas.draw_text("Blackjack", [600 // 19, 75], 56, "#000", 'sans-serif')
+    canvas.draw_text(game_message, [600 // 2, 600 // 1.5 - 10], 36, "#000", 'sans-serif')
 
     # draw player and dealer hands
     player_hand.draw(canvas, [600 // 5, 600 // 1.5])
