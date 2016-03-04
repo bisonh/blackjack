@@ -46,7 +46,11 @@ class Card:
     def draw(self, canvas, pos):
         card_loc = (CARD_CENTER[0] + CARD_SIZE[0] * RANKS.index(self.rank),
                     CARD_CENTER[1] + CARD_SIZE[1] * SUITS.index(self.suit))
-        canvas.draw_image(card_images, card_loc, CARD_SIZE, [pos[0] + CARD_CENTER[0], pos[1] + CARD_CENTER[1]], CARD_SIZE)
+        canvas.draw_image(card_images,
+                          card_loc,
+                          CARD_SIZE,
+                          [pos[0] + CARD_CENTER[0], pos[1] + CARD_CENTER[1]],
+                          CARD_SIZE)
 
 
 # define hand class
@@ -111,8 +115,10 @@ def deal():
     # initialize a new deck
     deck = Deck()
     deck.shuffle()
+
     # initialize new hand for player and dealer
     player_hand, dealer_hand = Hand(), Hand()
+
     # player is dealt to first
     player_hand.add_card(deck.deal_card())
     dealer_hand.add_card(deck.deal_card())
@@ -120,6 +126,7 @@ def deal():
     dealer_hand.add_card(deck.deal_card())
     print "PLAYER", player_hand
     print "DEALER", dealer_hand
+
     # switch to start play
     in_play = True
 
