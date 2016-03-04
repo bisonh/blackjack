@@ -197,6 +197,7 @@ def draw(canvas):
     # draw Blackjack, game message, score, and player titles
     canvas.draw_text("Blackjack", [600 // 19, 75], 56, "#000", 'sans-serif')
     canvas.draw_text(game_message, [600 // 2, 600 // 1.5 - 10], 36, "#000", 'sans-serif')
+    canvas.draw_text("Score: " + str(score), [364, 75], 36, "#000", 'sans-serif')
 
     # draw player and dealer hands
     player_hand.draw(canvas, [600 // 5, 600 // 1.5])
