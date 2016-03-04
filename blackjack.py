@@ -77,9 +77,6 @@ class Hand:
         return hand_value
 
     def draw(self, canvas, pos):
-        pass
-
-    def draw(self, canvas, pos):
         pass    # draw a hand on the canvas, use the draw method for cards
 
 
